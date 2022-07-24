@@ -1,0 +1,29 @@
+%{
+	double mem[26]; //memory for variables ´a´,...,´z´
+%}
+
+%token val  NUMBER
+%token index VAR
+%right ´=´ 
+%left ´+´,´-´ //left associative, same precedence
+%left ´*´,´/´ //left associative, higher precedence
+%left UNARYMINUS	
+%%
+
+list:
+	|list ´ \n ´
+	|list expr´ \n ´ {printf("\t%.8g\n",$2")}
+
+expr:
+	NUMBER
+	
+	VAR {$$=mem[$1];}
+	VAR expr ´=´ =   {$$=mem[$1] = $3;} 		
+	
+	| expr ´+´	expr{$$=$1+$3;}
+	| expr ´-´	expr{$$=$1-$3;}
+	| expr ´*´	expr{$$=$1*$3;}
+	| expr ´/´	expr{$$=$1/$3;}
+
+	| ´(´expr´)´	expr{$$=$2;}
+%%
