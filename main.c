@@ -1,7 +1,7 @@
 #include <ctype.h>
 
 int main(int argc, char* argv[]{
-    progname=argv[0];
+    char* progname=argv[0];
     yyparse();
 }
 
